@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <!-- BE PROUD OF YOUR MARKUP! -->
+
+    <meta charset="UTF-8">
+
+    <title>jsLint.it - About</title>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href='assets/css/styles.css' rel='stylesheet'>
+    <link href='assets/css/subpages.css' rel='stylesheet'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+
+    <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js" charset="utf-8"></script>
+
+    <style>
+        dl {
+            margin-left: 20px;
+        }
+        dt {
+            float:none;
+        }
+        dd {
+            margin: 10px 0 30px 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- #header > -->
+
+    <div id="header" role="banner">
+
+        <ul>
+            <li id="logo"><a href="index.html">Home</a></li>
+            <li><b>About</b></li>
+            <li><a id="help" href="lint.html">Read the <span class="forBro">f**king instructions</span> <span>instructions</span></a></li>
+            <li><a id="github" href="https://github.com/thierryk/JSLint">Source</a></li>
+        </ul>
+
+    </div>
+
+<!-- < #header -->
+
+<!-- #wrapper > -->
+
+    <div id="wrapper">
+
+<!-- #toc > -->
+
+        <div id="aside">
+
+            <h2>Cool Tools</h2>
+
+            <ul id="coolTools">
+                <li><a href="http://www.jshint.com/">JSHint</a></li>
+                <li><a href="http://rixth.github.com/jshintr/">JSHintr</a></li>
+                <li><a href="https://github.com/jshint/fixmyjs">fixmyjs</a></li>
+                <li><a href="http://jsperf.com/">jsPerf</a></li>
+                <li><a href="http://www.http://jsbin.com/#html,live">JSbin</a></li>
+                <li><a title="JavaScript Minifier" href="http://dean.edwards.name/packer/">Packer</a></li>
+            </ul>
+
+            <h2>Cool Book</h2>
+
+            <a href="http://www.amazon.com/YUI-3-Cookbook-Evan-Goer/dp/1449304192/ref=sr_1_1?s=books&ie=UTF8&qid=1338255008&sr=1-1">
+                <img src="assets/img/book.png" alt="YUI3 CookBook">
+            </a>
+
+            <h2>Credits</h2>
+
+            <ul>
+                <li><a href="http://glyphicons.com/">http://glyphicons.com/</a></li>
+                <li><a href="http://subtlepatterns.com/">http://subtlepatterns.com/</a></li>
+            </ul>
+
+        </div>
+
+<!-- < #toc -->
+
+<!-- #innerWrapper > -->
+
+        <div id="innerWrapper" role="main">
+
+            <h1 class="visuallyHidden">About</h1>
+
+            <h2>About JSLint</h2>
+
+            <p><b>JSLint</b> takes a JavaScript source and scans it. If it finds a problem, it returns a message describing the problem and an approximate location within the source. The problem is not necessarily a syntax error, although it often is. JSLint looks at some style conventions as well as structural problems. It does not prove that your program is correct. It just provides another set of eyes to help spot problems. Read <a href="lint.html">the instructions</a> for a complete overview... </p>
+
+            <p>There is a group for discussing <b>JSLint</b>, including feature requests, complaints, update announcements, and testimonials. It is at: <a href="http://tech.groups.yahoo.com/group/jslint_com/">http://tech.groups.yahoo.com/group/jslint_com/</a></p>
+
+            <h2>History</h2>
+
+            <p>jsLint.it is a fork of <a href="http://jslint.com">JSLint</a>, the tool written and maintained by Douglas Crockford.</p>
+
+            <p>The project originally started as an effort to make a <strong>more accessible</strong> version of <b>JSLint</b> (the online tool).</p>
+
+            <h2>Goal</h2>
+
+            <p>The goal of this web site is to help any developer to use an online tool to detect errors and potential problems in JavaScript code.</p>
+
+            <p>I believe that good semantics and keyboard navigation mechanisms can greatly help users, including assistive-device users.</p>
+
+            <h2>On my list</h2>
+
+            <dl>
+                <dt>a11y boost</dt>
+                <dd>Add 'WAI-ARIA' attributes where needed, add focus where appropriate</dd>
+                <dt>Fix minor bugs, clean up things (styles and scripts)</dt>
+                <dd>There are a few small issues I decided to ignore when I published this site</dd>
+                <dt>Make it kinda &quot;responsive&quot;</dt>
+                <dd>Use a couple of media queries so the layout fit in narrow windows (even though I don't see this tool being used on small devices)</dd>
+                <dt>First push to GitHub</dt>
+                <dd>Once the above is done, I'll push the whole enchilada</dd>
+                <dt>Switch from <a href="http://jslint.com">jslint</a> to <a href="http://jshint.com">jshint</a>?</dt>
+                <dd>Feedback anyone?</dd>
+            </dl>
+
+        </div>
+
+<!-- < #innerWrapper -->
+
+    </div>
+
+<!-- < #wrapper -->
+
+<!-- #footer > -->
+
+    <div id="footer">
+
+        <p><a id="toTop" title="Beam me up!" href="#"><img src="assets/img/clear.png" alt="Top of the page"></a> Crafted with care, in a cave, somewhere in Marin County - sunny California. Follow me on <a href="http://www.twitter.com/#!/thierrykoblentz">Twitter</a> or <a href="https://github.com/thierryk">GitHub</a>.</p>
+
+    </div>
+
+<!-- < #footer -->
+
+<script>
+    YUI().use('node','event', function(Y) {
+        Y.on(['domready','windowresize'], function() {
+            //style #aside with position:fixed *if* the viewport is tall enough
+            if (Y.one('body').get('winHeight') > 810) {
+                Y.one('#aside').addClass('fixed');
+            }
+        })
+    });
+</script>
+
+</body>
+</html>

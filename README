@@ -1,9 +1,14 @@
-JSLint, The JavaScript Code Quality Tool
+JSLint.it, The Online JavaScript Code Quality Tool
 
-Douglas Crockford
-douglas@crockford.com
+Thierry Koblentz
+@thierrykoblentz
 
-2012-02-21
+2012-05-31
+
+Below is a copy of the README from Douglas Crockford's repo
+See: https://github.com/douglascrockford/JSLint/blob/master/README
+
+-------------------------------------------------------------------------------
 
 jslint.js contains the fully commented global JSLINT function.
 
@@ -42,3 +47,5 @@ improves readability, and frees you to express yourself in ways that matter.
 JSLint here plays the part of a stern but benevolent editor, helping you to
 get the style right so that you can focus your creative energy where it is
 most needed.
+
+-------------------------------------------------------------------------------

@@ -1,0 +1,170 @@
+/**
+ * Created by thierryk
+ * Date: 5/28/12
+ * Time: 3:12 PM
+ *
+ * This file is for all pages, but the home page
+ */
+    #wrapper {
+        width: 1000px;
+        margin: auto;
+        padding: 60px 0 80px;
+        overflow: hidden;
+    }
+
+    #innerWrapper {
+        float: left;
+        width: 700px;
+    }
+
+    h1 {
+        margin-bottom: 2rem;
+    }
+
+    h2 {
+        padding-top: 2.7rem;
+        margin-bottom: 1.6rem;
+    }
+
+    h2:first-of-type {
+        padding-top:0;
+    }
+
+    h2:target {
+        padding-top:7rem;
+    }
+
+    h2 code {
+        text-shadow: none;
+    }
+
+    #wrapper p,
+    pre {
+        margin: 1rem;
+    }
+
+    pre {
+        white-space: pre-wrap;
+    }
+
+    i {
+        font-size: larger;
+        font-family: 'sans-serif';
+    }
+
+    dt {
+        float: left;
+        margin-right: 5px;
+    }
+
+    table {
+        margin: 40px 0;
+        border-collapse: collapse;
+    }
+
+    thead th {
+        background:  rgba(0,0,0,.2);
+        color: #333;
+        padding: 20px 10px;
+        letter-spacing: 1px;
+        border-top: 1px solid rgba(0,0,0,.2);
+        border-bottom: 1px solid rgba(0,0,0,.2);
+    }
+
+    th {
+        font-weight: normal;
+        text-align: left;
+        color: #777;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
+
+    th:first-child {
+        padding-left:10px;
+    }
+
+    th:first-child,
+    td:last-child {
+        vertical-align: top;
+    }
+
+    thead th:first-child {
+        width: 270px;
+    }
+
+    td:first-of-type,
+    thead th:nth-child(2) {
+        text-align: center;
+        padding: 0 5px;
+    }
+
+    tr:nth-child(odd) {
+        background: rgba(0,0,0,.04);
+    }
+
+    tr:nth-child(even) {
+        background: rgba(0,0,0,.02);
+    }
+
+
+    #toc,
+    #aside {
+        position:absolute;
+        margin-left:720px;
+        width:220px;
+        padding: 30px 30px 30px 40px;
+        border: 1px solid #ddd;
+        list-style:none;
+        top:90px;
+        background:rgba(0,0,0,.02);
+        border-radius:4px;
+        box-shadow:1px 1px #ececec inset,1px 1px #fff;
+    }
+    #toc.fixed,
+    #aside.fixed {
+        position:fixed;
+        margin-left:720px;
+    }
+    #toc h2,
+    #aside h2 {
+        margin-bottom:20px;
+        text-shadow:none;
+    }
+    #toc li,
+    #aside li {
+        cursor:pointer;
+        color:#ddd;
+        font-size:.9rem;
+        margin:8px;
+    }
+    #toc li:hover,
+    #toc li:focus,
+    #aside li:hover,
+    #aside li:focus {
+        color:#ff4500;
+    }
+
+/**
+ * 'msgs' page only
+ */
+
+    #msgs dt,
+    #msgs dd {
+        padding: 1rem;
+    }
+    #msgs dd:nth-of-type(odd) {
+        background: rgba(0,0,0,.08);
+    }
+    #msgs dd:nth-of-type(even) {
+        background: rgba(0,0,0,.04);
+    }
+    #msgs dd:first-of-type {
+        border-radius: 4px 4px 0 0;
+    }
+    #msgs dd:last-child {
+        border-radius: 0 0 4px 4px;
+    }

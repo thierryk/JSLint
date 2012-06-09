@@ -6266,23 +6266,25 @@ klass:              do {
 
         if (data.errors || data.unused || data['undefined']) {
             err = true;
-            output.push('<div id=errors><i>Error:</i>');
+            output.push('<div id="errors" class="jsLint-box" tabindex="0"><h2 class="forBro">Yikes!</h2><h2>Error:</h2>');
             if (data.errors) {
+                output.push('<dl>');
                 for (i = 0; i < data.errors.length; i += 1) {
                     warning = data.errors[i];
                     if (warning) {
                         evidence = warning.evidence || '';
-                        output.push('<p>Problem' + (isFinite(warning.line)
+                        output.push('<dt><b><span class="forBro">The shit hit the fan</span><span>Problem</span>' + (isFinite(warning.line)
                             ? ' at line ' + String(warning.line) +
                                 ' character ' + String(warning.character)
                             : '') +
-                            ': ' + warning.reason.entityify() +
-                            '</p><p class=evidence>' +
+                            ':</b> ' + warning.reason.entityify() +
+                            '</dt><dd class=evidence>' +
                             (evidence && (evidence.length > 80
                                 ? evidence.slice(0, 77) + '...'
-                                : evidence).entityify()) + '</p>');
+                                : evidence).entityify()) + '</dd>');
                     }
                 }
+                output.push('</dl>');
             }
 
             if (data['undefined']) {
@@ -6311,7 +6313,7 @@ klass:              do {
 
         if (!errors_only) {
 
-            output.push('<br><div id=functions>');
+            output.push('<h2>Function Report</h2><div id="functions" class="jsLint-box">');
 
             if (data.urls) {
                 detail("URLs<br>", data.urls, '<br>');
@@ -6325,7 +6327,7 @@ klass:              do {
                 output.push('<div><i>Global</i> ' +
                     data.globals.sort().join(', ') + '</div>');
             } else {
-                output.push('<div><i>No new global variables introduced.</i></div>');
+                output.push('<div>No new global variables introduced.</div>');
             }
 
             for (i = 0; i < data.functions.length; i += 1) {
@@ -6336,12 +6338,12 @@ klass:              do {
                         names[j] = the_function.params[j].string;
                     }
                 }
-                output.push('<br><div class=function><i>' +
+                output.push('<div class=function><i>' +
                     String(the_function.line) + '</i> ' +
                     the_function.name.entityify() +
                     '(' + names.join(', ') + ')</div>');
-                detail('<big><b>Undefined</b></big>', the_function['undefined']);
-                detail('<big><b>Unused</b></big>', the_function.unused);
+                detail('<b>Undefined</b>', the_function['undefined']);
+                detail('<b>Unused</b>', the_function.unused);
                 detail('Closure', the_function.closure);
                 detail('Variable', the_function['var']);
                 detail('Exception', the_function.exception);
@@ -6354,7 +6356,7 @@ klass:              do {
                 keys = Object.keys(data.member);
                 if (keys.length) {
                     keys = keys.sort();
-                    output.push('<br><pre id=properties>/*properties<br>');
+                    output.push('<pre id=properties>/*properties<br>');
                     mem = '    ';
                     italics = 0;
                     j = 0;
@@ -6393,7 +6395,7 @@ klass:              do {
     };
     itself.jslint = itself;
 
-    itself.edition = '2012-04-15';
+    itself.edition = '2012-05-09';
 
     return itself;
 }());

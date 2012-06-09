@@ -1,0 +1,1322 @@
+/**
+ * Created by: thierryk
+ * Date: 5/22/12
+ * Time: 9:30 PM
+ */
+
+/**
+ * TDO: Do some major cleaning in there
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+    background: url(../img/bg-body.png);
+    color: #333;
+    padding-top: 50px;
+    font: 1em/1.4 Arial,'Helvetica Neue',Helvetica,sans-serif;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, .8);
+}
+
+h1,h2,h3 {
+    font-family: "Oswald";
+    text-shadow: 2px 2px 0 #fff, 2px 2px 0 #000;
+}
+
+h3 {
+    font-size: 1.65rem;
+    padding: 0 0 20px 10px;
+}
+
+h2 {
+    text-rendering: optimizeLegibility;
+    font-size: 1.8rem;
+    margin: 0 0 20px;
+    letter-spacing: 1px;
+}
+
+h2,
+h3 {
+    text-rendering: optimizeLegibility;
+    letter-spacing:1px;
+}
+
+i {
+    font-family: serif;
+    font-style: italic;
+}
+
+dt {
+    font-weight: bold;
+}
+
+code,
+.code {
+    color: #C09853;
+    font-family: monospace;
+    background: #FCF8E3;
+    border: 1px solid #C09853;
+    padding: 1px 3px;
+    border-radius: 4px;
+}
+
+.alert {
+    color: #B94A48;
+    border: 1px solid #B94A48;
+    background-color: #F2DEDE;
+    border-radius: 3px;
+}
+    p.alert {
+        padding: 10px;
+    }
+
+.indent {
+    padding-left: 50px;
+}
+
+a {
+    color: #ff4500;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    color: #F57342;
+}
+a:hover,
+a:focus {
+    color: #ff4500;
+    text-decoration: underline;
+}
+
+img {
+    border: 0;
+}
+
+/**
+* HELPER classes
+*/
+.dn {
+    display: none;
+}
+
+.visibilityHidden {
+    visibility: hidden;
+}
+
+/* Yes, !important, so what? ;) */
+.visible {
+    visibility: visible !important;
+}
+
+.visuallyHidden {
+    position: absolute;
+    width: 1px;
+    text-indent: -100px;
+    letter-spacing: -.6rem;
+    overflow: hidden;
+}
+
+/**
+* BROGRAMMERS
+*/
+.brogrammer #lint-btn:after {
+    content: " the crap out of this";
+}
+
+.brogrammer #input-btn:after {
+    content: " your badass code here!";
+}
+
+.brogrammer #options-btn:after {
+    content: " (WTF?)";
+}
+
+.brogrammer #fileInput-btn:after {
+    content: " some shit";
+}
+
+.brogrammer #file_upload_group {
+    width: 213px;
+}
+
+.brogrammer #JSLINT_INPUT {
+    background-image: url(../img/bg_textarea_forBro.png);
+}
+
+/**
+* By default this is *hidden*
+*/
+.forBro {
+    position: absolute;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.brogrammer .forBro {
+    position: static;
+    height: auto;
+    width: auto;
+    overflow: visible;
+}
+
+/* If brogrammer, we reveal the node, but kill next sibling */
+.brogrammer .forBro + * {
+    display: none;
+}
+
+.nomouse-true #toolbar {
+    display: none;
+}
+
+.nomouse-true .nomouse-alternative {
+    display: block;
+}
+
+/**
+* LAYOUT
+*/
+/* HEADER/FOOTER stuff */
+#JSLINT_,
+#header ul {
+    width: 1000px;
+    margin: auto;
+}
+
+#header,
+#footer {
+    color: #fff;
+    position: fixed;
+    z-index: 6;
+    width: 100%;
+    background: rgba(0,0,0,.8);
+    border-bottom: 1px double #ccc;
+    background-clip: padding-box;
+    box-shadow: 0 1px 5px #333;
+    text-shadow: 1px 1px 2px #000;
+}
+
+#footer {
+    bottom: 0;
+    padding: 10px;
+    text-align: center;
+}
+
+#header {
+    top: 0;
+}
+
+#header ul {
+    clear: both;
+    position: relative;
+    z-index: 5;
+}
+
+#header li {
+    color: #fff;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px;
+    text-shadow: 1px 1px #000;
+    border-radius: 3px;
+}
+
+#header li a,
+#header li > b {
+    display: inline-block;
+    box-shadow: -1px -1px 0 #000,1px 1px 0 #444;
+    padding: 3px 10px;
+    letter-spacing: 1px;
+    font-weight: normal;
+    background: rgba(0,0,0,.05);
+    border-radius: 3px;
+}
+
+#logo {
+    position: relative;
+    overflow: hidden;
+    text-indent: -300px;
+    width: 185px;
+    height: 32px;
+    margin: 3px 10px 0 0 !important;
+    background: url(../img/logo.png) no-repeat 0 0;
+}
+
+.brogrammer #logo {
+    background-position: 0 -36px;
+}
+
+#logo a {
+    box-shadow: none !important;
+    display: block !important;
+    background: none !important;
+}
+
+#header #github {
+    padding-right: 28px;
+    background: url(../img/icon-github.png) no-repeat 92% 50%;
+}
+
+#header a:hover,
+#header a:focus,
+#header li > b {
+    background: rgba(0,0,0,.9);
+}
+
+/**
+ * for keyboard users 'only'
+ * 'keyboardUserChoice' is the checkbox 'keybordOptionLabel' is the text
+ * there is no common wrapper for those and we need to trigger the on/off via the '+' combinator
+ * so rules below are a bit more complicated than I'd like them to...
+ */
+/* the checkbox */
+#keyboardUserChoice {
+    position: absolute;
+    left: 50%;
+    top: 27px;
+    margin-left: -500px;
+    opacity: 0;
+    width: 50%;
+}
+
+/* this label directly follow the above checkbox (the checkbox cannot be nested as we're using '+') */
+#keybordOptionLabel {
+    display: block;
+    background: url(../img/bg-body.png);
+    max-height: 0;
+    padding: 0 30px;
+    overflow: hidden;
+    color: #333;
+    box-shadow: 0 0 9px #333 inset;
+    text-shadow: 1px 1px #ccc;
+    -webkit-transition: all 1s;
+}
+
+/* This is to keep the content of the label aligned to the right of the checkbox */
+#keybordOptionLabel:before  {
+    content: "";
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 50%;
+    height: 18px;
+    margin-left: -475px;
+    background: url(../img/keyboard-checkmark.png) no-repeat 100% 100%;
+}
+
+/* style of the label once the input gets some action */
+#keyboardUserChoice:focus + #keybordOptionLabel {
+    max-height: 100px;
+    padding: 30px;
+    opacity: 1;
+}
+
+/* kinda complicated, but thi is just to swap the position of the image in the pseudo-element when the checkbox is checked */
+#keyboardUserChoice:checked + #keybordOptionLabel:before  {
+    background: url(../img/keyboard-checkmark.png) no-repeat 100% 0;
+}
+
+li#JSLINT_EDITION {
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+#header a:link,
+#footer a:visited,
+#header a:visited,
+#footer a:link {
+    color: #ff4500;
+    text-decoration: none;
+    text-shadow: 1px 1px 2px #000;
+}
+
+#toTop {
+    position: relative;
+    left: -120px;
+}
+
+#toTop img {
+    vertical-align: middle;
+}
+
+#JSLINT_ {
+    padding: 30px 0;
+}
+
+#wrapper {
+    width: 100%;
+    position: relative;
+}
+
+/**
+* TABs + LOGO
+*/
+#toolbar {
+    position: relative;
+    padding-top: 6px;
+    height: 66px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    margin: 0 5px -3px;
+    padding: 10px;
+    background: none;
+    border-style: solid;
+    border-color: transparent;
+    font-weight: bold;
+}
+
+.primary-btn:not(#fileInput-btn)[tabindex="-1"] {
+    cursor: default !important;
+    opacity: .5;
+}
+
+#toolbar button:first-child {
+    margin-left: 15px;
+}
+
+/**
+* 1. INPUT
+*/
+#input {
+    float: left;
+    width: 49%;
+}
+
+.nomouse-true #input {
+    float: none;
+    width: 100%;
+}
+
+/* the views */
+.view {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.nomouse-true .view {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#JSLINT_INPUT {
+    display: block;
+    height: 34.2rem;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 1rem 1rem 3.5rem;
+    width: 100%;
+    outline: 0;
+    resize: vertical;
+    border: 3px solid #ececec;
+    border-radius: 3px;
+    font-family: monospace;
+    background: url(../img/bg_textarea.png) no-repeat 50% 50%;
+    background-color: #fff !important; /* Safari */
+}
+
+#JSLINT_INPUT:focus {
+    outline: 0;
+    box-shadow: -1px -1px 5px #599BDC, 1px 1px 5px #599BDC;
+}
+
+#JSLINT_INPUT:focus,
+#JSLINT_INPUT.fed {
+    background-image: none;
+}
+
+.nomouse-true #JSLINT_INPUT {
+    height: 370px;
+}
+
+/**
+* By default #file_info and #file_api_stuff are hidden
+* #file_api_stuff is revealed if the browser supports the file APIs
+* file_info is revealed if a file has been chosen
+*/
+#buttonsForInput {
+    position: relative;
+    margin: 30px auto 40px;
+}
+
+#file_info,
+#file_api_stuff {
+    visibility: hidden;
+    display: inline-block;
+}
+
+#info {
+    position: relative;
+}
+
+#file_info {
+    position: absolute;
+    top: -86px;
+    left: 10px;
+    right: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px 12px;
+    background: rgba(255,255,255,.85);
+    color: #555;
+    text-shadow: 1px 1px 1px #fff;
+    font-size: .9rem;
+}
+
+#file_info dt,
+#file_info dd {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+#file_info dd:first-of-type:after {
+    content: ", ";
+}
+
+#file_info dd:first-of-type {
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: block;
+    color: #ff4500;
+}
+
+#file_info dt:first-child,
+#file_info dd:last-child:after {
+    display: none;
+}
+
+/**
+* FILE UPLOAD
+*/
+#file_upload_group {
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    width: 140px;
+    height: 58px;
+    padding: 3px 0 0 5px;
+    top: -4px;
+}
+
+#fileInput-btn {
+    pointer-events: none;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    bottom: 4px;
+    left: 4px;
+    margin: 0;
+}
+
+#fileInput-btn i {
+    background-position: -27px 50%;
+}
+
+#fileInput {
+    cursor: pointer;
+    width: 138px;
+    height: 56px;
+}
+
+.brogrammer #fileInput {
+    width: 210px;
+}
+
+#fileInput:focus,
+#fileInput:active {
+    outline: 8px auto -webkit-focus-ring-color;
+}
+
+#clear-btn {
+    margin: 0 10px 0 4px;
+}
+#clear-btn i {
+    background-position: 0 50%;
+}
+
+/**
+* 2. OPTIONS
+*/
+#options {
+    float: right;
+    width: 50%;
+}
+
+.nomouse-true #options {
+    float: none;
+    width: 100%;
+}
+
+#optionsWrapper-pager {
+    background: #ececec;
+    border-radius: 5px 5px 0 0;
+    padding: 3px 0 0 3px;
+}
+
+.nomouse-true #optionsWrapper-pager {
+    display: none;
+}
+
+#optionsWrapper-pager li {
+    display: inline-block;
+    margin-right: -2px;
+}
+
+#optionsWrapper-pager a {
+    cursor: pointer;
+    display: block;
+    padding: 8px;
+    margin-bottom: -3px;
+    background: #ddd;
+    border-radius: 5px 5px 0 0;
+    color: #000;
+    text-shadow: none;
+    text-decoration: none;
+}
+
+/* active */
+
+#optionsWrapper-pager li.active {
+    border: 0;
+}
+
+#optionsWrapper-pager li.active a {
+    border-radius: 3px;
+    background: url(../img/bg-body.png);
+    color: #000;
+}
+
+/* wrapper */
+#JSLINT_TABLE {
+    height: 31.6rem;
+    border: 3px solid #ececec;
+    border-top: 0;
+    border-radius: 3px;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+.nomouse-true #JSLINT_TABLE {
+    clear: both;
+    height: auto;
+    border-top: 3px solid #ececec;
+}
+
+.section {
+    min-height: 31rem;
+    opacity: 0;
+    position: absolute;
+    visibility: hidden;
+    z-index: 0;
+    -webkit-transition: opacity, 1s;
+    -moz-transition: opacity, 1s;
+    -ms-transition: opacity, 1s;
+    -o-transition: opacity, 1s;
+    transition: opacity, 1s;
+}
+
+.nomouse-true .section {
+    min-height: 0;
+    opacity: 1;
+    position: static;
+    visibility: visible;
+}
+
+.section > h3 {
+    position: absolute;
+    left: -500px;
+    white-space: nowrap;
+}
+
+.nomouse-true .section > h3 {
+    position: static;
+    padding-top: 1rem;
+}
+
+.nomouse-true #JSLINT_FIELDS h3 {
+    margin: -30px 0 0 -30px;
+}
+
+.sv-one .section:first-child,
+.sv-two .section:nth-child(2),
+.sv-three .section:nth-child(3),
+.sv-four .section:nth-child(4) {
+    position: relative;
+    visibility: visible;
+    z-index: 5;
+    opacity: 1;
+}
+
+#JSLINT_OPTIONS {
+    position: relative;
+}
+
+h2.forNomouse {
+    display: none;
+}
+
+.nomouse-true h2.forNomouse {
+    display: block;
+    clear: both;
+}
+
+.skipLink {
+    display: none;
+    float: left;
+    margin: 20px 4px;
+    padding: 5px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 0 rgba(0,0,0,.05) inset, 0 0 1px rgba(0,0,0,.5);
+    background: #fff;
+}
+
+#JSLINT_OPTIONS .skipLink {
+    margin-top: -15px;
+}
+
+.nomouse-true .skipLink {
+    display: block;
+}
+
+.section {
+    border-bottom: 1px solid #ddd;
+}
+
+#thirdSection {
+
+}
+
+.section > ul > li {
+    border-bottom: 1px solid #ececec !important;
+}
+
+.section > ul > li > fieldset {
+    font-size: .95rem;
+}
+
+#JSLINT_CLEARALL {
+    margin: 0 10px 0 0;
+}
+
+#JSLINT_CLEARALL i {
+    background-position: -54px 50%;
+}
+
+#lint-btn i {
+    background-position: -81px 50%;
+}
+
+#JSLINT_TABLE li {
+    list-style: none;
+    background: url(../img/bg-body.png);
+}
+
+#JSLINT_TABLE li li:hover {
+    background: #fff;
+}
+
+/**
+ * options (fieldset)
+ */
+
+#JSLINT_TABLE fieldset {
+    position: relative;
+    text-align: right;
+    padding: .8em .8em .8em 0;
+    border: 0;
+}
+
+fieldset[title=bro] label:last-child,
+fieldset[title=keyboard] label:last-child {
+    visibility: hidden;
+}
+
+#JSLINT_TABLE legend {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    margin-top: -.75em;
+    white-space: nowrap;
+    padding-left: 25px;
+}
+
+#JSLINT_TABLE fieldset label {
+    display: inline-block;
+    width: 15px;
+    position: relative;
+    height: 19px;
+}
+
+.info-btn {
+    position: absolute;
+    left: 0;
+    top: 1px;
+    cursor: help;
+    width: 20px;
+    height: 20px;
+    background: url(../img/icon-more_info.png) no-repeat;
+    border: 0;
+}
+
+/**
+ * TOOLTIPs
+ */
+#JSLINT_TABLE label b {
+    display: none;
+}
+
+#JSLINT_TABLE label:hover b,
+#JSLINT_TABLE input:focus + b {
+    display: block;
+    position: absolute;
+    padding: 3px 8px;
+    background: #333;
+    text-shadow: 1px 1px 1px #000;
+    color: #fff;
+    top: -31px;
+    left: -38px;
+    z-index: 1;
+    border-radius: 5px;
+}
+
+#JSLINT_TABLE label:hover b:before,
+#JSLINT_TABLE input:focus + b:before {
+    content: "";
+    position: absolute;
+    border-width: 12px 0 12px 12px;
+    border-color: transparent;
+    border-style: solid;
+    border-top-color: #333;
+    top: 100%;
+    left: 32px;
+    margin-top: -3px;
+}
+
+/* FIRST LABEL AT THE TOP OF EACH LIST */
+
+    #JSLINT_TABLE .firsInList label:hover b,
+    #JSLINT_TABLE .firsInList input:focus + b {
+        top: 31px;
+    }
+    #JSLINT_TABLE .firsInList label:hover b:before,
+    #JSLINT_TABLE .firsInList input:focus + b:before {
+        border-color: transparent transparent #333 transparent;
+        top: -18px;
+    }
+
+.info {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    font-size: .8rem;
+    -webkit-transition-property: max-height, opacity;
+    -webkit-transition-duration: 1s, 1s;
+    -moz-transition-property: max-height, opacity;
+    -moz-transition-duration: 1s, 1s;
+    -ms-transition-property: max-height, opacity;
+    -ms-transition-duration: 1s, 1s;
+    -o-transition-property: max-height, opacity;
+    -o-transition-duration: 1s, 1s;
+}
+
+/* reset */
+#overlay .info {
+    max-height: none;
+    opacity: 1;
+    overflow: visible;
+}
+
+/* reset */
+#overlay a {
+    visibility: visible;
+}
+
+.info p {
+    margin: 1px 10px 20px 15px;
+}
+
+.info p.code {
+    margin: 10px;
+}
+
+.info.show {
+    display: block;
+    max-height: 500px;
+    opacity: 1;
+}
+
+.info a b {
+    opacity: 0;
+}
+
+/* we use visibility rather than display (which would create a jump when the box closes) to remove the links from the tabbing sequence if the user did not request more info */
+.info a {
+    visibility: hidden;
+}
+
+.info.show a {
+    visibility: visible;
+}
+
+/**
+* MORE OPTIONS
+*/
+#JSLINT_FIELDS {
+    padding: 40px;
+    min-height: 26.7rem;
+}
+
+#JSLINT_FIELDS input {
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    padding: 3px;
+    margin: 2px 0;
+}
+
+#JSLINT_FIELDS span.extra {
+    float: right;
+    margin-right: 25px;
+    font-style: italic;
+    font-size: .8rem;
+}
+
+#JSLINT_JSLINTSTRING {
+    font-family: monospace;
+    padding: 1em;
+}
+
+#JSLINT_PREDEF {
+    display: block;
+    width: 95%;
+}
+
+#JSLINT_FIELDS label:last-of-type {
+    margin-top: 20px;
+    display: block;
+}
+
+/**
+ * BUTTONS below '#options'
+ */
+#lint-btn-group {
+    text-align: right;
+    margin: 30px auto 40px;
+}
+
+/**
+* 3. LINT (OUTPUT)
+*/
+#output {
+    clear: both;
+    width: 100%;
+    padding: 0;
+}
+
+#warning {
+    font-size: 1.4rem;
+    font-style: italic;
+    padding: 0 20px 20px 20px;
+}
+
+#warning a {
+    text-decoration: none !important;
+}
+
+#JSLINT_OUTPUT h2 {
+    color: #333;
+    margin: 15px 0 35px;
+}
+
+#errors h2 {
+    margin: -90px 0 90px -35px;
+}
+
+#JSLINT_TREE {
+    text-align: center;
+    margin: -20px 0 30px 20px;
+}
+
+#JSLINT_TREE:before {
+    content: "That took only... ";
+}
+
+/* These two are revealed when the 'lint' button is clicked */
+#warning,
+#JSLINT_TREE {
+    visibility: hidden;
+}
+
+.brogrammer #JSLINT_TREE:after {
+    content:" Holly shit, that's fast!";
+}
+
+#errors,
+#functions {
+    margin: 1rem 1rem 2rem;;
+    border-width: 2px;
+    border-style: solid;
+    padding: 20px 20px 45px;
+    border-radius: 4px;
+}
+
+#errors {
+    color: #B94A48;
+    text-shadow: 1px 1px #fff;
+    border-color: #B94A48;
+    background-color: #F2DEDE;
+}
+
+#errors dl {
+    margin-top: 1rem;
+}
+
+#errors dt {
+    padding-left: 20px;
+    background: url(../img/red-flag.png) no-repeat;
+}
+
+#errors dd.evidence {
+    display: inline;
+    background: #FCF8E3;
+    border: 1px solid #FBEED5;
+    padding: 1px 3px;
+    margin-left: 1rem;
+    border-radius: 4px;
+}
+
+#errors p,
+#errors dt {
+    margin: .8rem 0 .5rem;
+}
+
+#functions {
+    color: #3A87AD;
+    background-color: #D9EDF7;
+    border-color: #3A87AD;
+    font-family: monospace;
+}
+
+#members {
+    background-color: peachpuff;
+}
+
+#members {
+    border: 2px solid black;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+#functions div {
+    margin-left: 3rem;
+}
+
+#functions div:first-child {
+    margin: 0 0 20px;
+}
+
+#functions div.function {
+    margin-left: 0;
+}
+
+#properties {
+    margin-top: 1.5rem;
+}
+
+#JSLINT_JSLINTSTRING {
+    color: #C09853;
+    margin: 1rem 1rem 2rem;;
+    border-width: 2px;
+    border-style: solid;
+    padding: 20px;
+    border-radius: 4px;
+    background: #FCF8E3;
+    border: 1px solid #C09853;
+}
+
+/**
+ * OVERLAY in #options
+ */
+#overlay:not(:empty) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,.5);
+    text-align: center;
+    z-index: 10;
+}
+
+#overlay:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+/* plugged via JavaScript (inner box) */
+    #overlay-wrap {
+        display: inline-block;
+        vertical-align: middle;
+        text-align: left;
+        width: 600px;
+        padding: 20px;
+        background: #fff;
+        border-width: 1px;
+        border-style: solid;
+        box-shadow: 1px 1px 1px rgba(0,0,0,.45), 0 0 0 7px rgba(0,0,0,.25);
+        background: url(../img/bg-body.png);
+    }
+
+    #overlay-wrap > b {
+        display: block;
+        padding-bottom: 5px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #overlay .fileUpload p {
+        margin: 40px;
+        font-size: 1.4rem;
+    }
+
+/**
+* TJK
+*/
+
+/*
+* radio styling from: http://cssdeck.com/item/130/form-controls-from-chromes-print-preview
+*/
+
+input[type='radio'] {
+    -webkit-box-shadow: inset 0 1px 2px white, 0 1px 2px rgba(0, 0, 0, .2);
+    -moz-box-shadow: inset 0 1px 2px white, 0 1px 2px rgba(0, 0, 0, .2);
+    box-shadow: inset 0 1px 2px white, 0 1px 2px rgba(0, 0, 0, .2);
+    -webkit-appearance: none;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 5px;
+    -webkit-transition: border 500ms;
+    -moz-transition: border 500ms;
+    -ms-transition: border 500ms;
+    -o-transition: border 500ms;
+    transition: border 500ms;
+    background: -webkit-linear-gradient(#fafafa, #dcdcdc);
+    background: -moz-linear-gradient(#fafafa, #dcdcdc);
+    background: -ms-linear-gradient(#fafafa, #dcdcdc);
+    background: -o-linear-gradient(#fafafa, #dcdcdc);
+    background: linear-gradient(#fafafa, #dcdcdc);
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    border: 1px solid #a0a0a0;
+    display: inline-block;
+    height: 15px;
+    margin-top: 0;
+    position: relative;
+    top: 2px;
+    vertical-align: baseline;
+    width: 15px;
+}
+
+input[type='radio']:disabled {
+    opacity: .75;
+}
+
+input[type='radio']:not(:disabled):not(.disabled):hover {
+    background: -webkit-linear-gradient(#fff, #e6e6e6);
+    background: -moz-linear-gradient(#fff, #e6e6e6);
+    background: -ms-linear-gradient(#fff, #e6e6e6);
+    background: -o-linear-gradient(#fff, #e6e6e6);
+    background: linear-gradient(#fff, #e6e6e6);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+input[type='radio']:active {
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+    -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+    background: -webkit-linear-gradient(#f0f0f0, #bebebe);
+    background: -moz-linear-gradient(#f0f0f0, #bebebe);
+    background: -ms-linear-gradient(#f0f0f0, #bebebe);
+    background: -o-linear-gradient(#f0f0f0, #bebebe);
+    background: linear-gradient(#f0f0f0, #bebebe);
+    border: 1px solid #808080;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .25);
+}
+
+input[type='radio']:checked::before {
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+    -webkit-margin-start: 4px;
+    background: #808080;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    content: "";
+    display: inline-block;
+    height: 5px;
+    left: 0;
+    margin-top: 4px;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    vertical-align: top;
+    width: 5px;
+}
+
+/**
+* drop shadow
+*/
+#textAreaWrapper {
+    width: 97%;
+    margin: auto;
+}
+
+.nomouse-true #textAreaWrapper {
+    width: 100%;
+}
+
+.jsLint-box {
+    position: relative;
+}
+
+.jsLint-box:before,
+.jsLint-box:after {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    bottom: 14px;
+    left: 10px;
+    width: 50%;
+    height: 20px;
+    max-width: 300px;
+    background: #999;
+    -webkit-box-shadow: 0 15px 10px #999;
+    -moz-box-shadow: 0 15px 10px #999;
+    box-shadow: 0 15px 10px #999;
+    -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+    -ms-transform: rotate(-3deg);
+    transform: rotate(-3deg);
+}
+
+.jsLint-box:after {
+    -webkit-transform: rotate(3deg);
+    -moz-transform: rotate(3deg);
+    -o-transform: rotate(3deg);
+    -ms-transform: rotate(3deg);
+    transform: rotate(3deg);
+    right: 10px;
+    left: auto;
+}
+
+/*
+* BUTTONS
+* started with the GitHub buttons and went from there
+*/
+.current:not(#lint-btn) {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.btn img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.btn {
+    cursor: pointer;
+    position: relative;
+    padding: 0 10px;
+    min-height: 56px;
+    font-family: Helvetica,arial,freesans,clean,sans-serif;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 white;
+    white-space: nowrap;
+    border: 1px solid #D4D4D4;
+    border-bottom-color: #BCBCBC;
+    border-radius: 3px;
+    background: #FAFAFA;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa',endColorstr='#eaeaea')";
+    background-image: -webkit-linear-gradient(#FAFAFA,#EAEAEA);
+    background-image: -moz-linear-gradient(#FAFAFA,#EAEAEA);
+    background-image: -o-linear-gradient(#FAFAFA,#EAEAEA);
+    background-image: linear-gradient(#FAFAFA,#EAEAEA);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    letter-spacing: 1px;
+    font: 1.1rem/1.5 'Oswald', Helvetica;
+}
+
+.btn:before {
+    position: absolute;
+    content: "";
+    left: -3px;
+    right: -3px;
+    top: -3px;
+    bottom: -3px;
+    z-index: -1;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.btn:hover:before,
+.btn:active:before {
+    border: 1px solid #999;
+}
+
+.btn.current:hover:before,
+.btn.current:active:before {
+    border: 0;
+}
+
+/* button with icon (inside a <i>) */
+.btn i {
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+    margin-right: 10px;
+    vertical-align: middle;
+    background-image: url(../img/sprite.png);
+    background-repeat: no-repeat;
+}
+
+.primary-btn {
+    background: #599BDC;
+    color: #fff;
+    border: 1px solid #599BDC;
+    text-shadow: -1px -1px 0 #3072B3;
+    background-image: -webkit-linear-gradient(top, #599BDC, #3072B3);
+    background-image: -moz-linear-gradient(top, #599BDC, #3072B3);
+    background-image: -ms-linear-gradient(top, #599BDC, #3072B3);
+    background-image: -o-linear-gradient(top, #599BDC, #3072B3);
+    background-image: linear-gradient(to bottom, #599BDC, #3072B3);
+}
+
+#toTop img {
+    width: 26px;
+    height: 26px;
+    background: url(../img/sprite.png) no-repeat 100% 50%;
+}

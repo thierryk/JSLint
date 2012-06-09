@@ -1,5 +1,5 @@
 // init_ui.js
-// 2011-12-08
+// 2012-05-13
 
 // This is the web browser companion to fulljslint.js. It is an ADsafe
 // lib file that implements a web ui by adding behavior to the widget's
@@ -11,17 +11,18 @@
 // option = {adsafe: true, fragment: false}
 
 /*properties check, cookie, each, edition, get, getCheck, getTitle, getValue,
-    has, indent, isArray, join, jslint, length, lib, maxerr, maxlen, on,
+    has, indent, isArray, join, jslint, klass, length, lib, maxerr, maxlen, on,
     predef, push, q, select, set, split, stringify, style, target, tree, value
 */
-
 
 ADSAFE.lib("init_ui", function (lib) {
     'use strict';
 
     return function (dom) {
         var table = dom.q('#JSLINT_TABLE'),
-            boxes = table.q('span'),
+            allfieldsets = table.q('fieldset'),
+            allradiobuttons = table.q('input'),
+            allradiodefaults = table.q('input[value=undefined]'),
             indent = dom.q('#JSLINT_INDENT'),
             input = dom.q('#JSLINT_INPUT'),
             jslintstring = dom.q('#JSLINT_JSLINTSTRING'),
@@ -30,26 +31,44 @@ ADSAFE.lib("init_ui", function (lib) {
             option = lib.cookie.get(),
             output = dom.q('#JSLINT_OUTPUT'),
             tree = dom.q('#JSLINT_TREE'),
-            predefined = dom.q('#JSLINT_PREDEF');
+            predefined = dom.q('#JSLINT_PREDEF'),
+            // TJK for some weird reason trying to get to this via an ID fails
+            fileinfo = dom.q('dl');
 
+// Take care of the JSLint directive ('/*jslint ... */') box
         function show_jslint_control() {
+
 
 // Build and display a /*jslint*/ control comment.
 // The comment can be copied into a .js file.
 
             var a = [];
 
-            boxes.each(function (bunch) {
-                var name = bunch.getTitle(),
+            allfieldsets.each(function (fieldset) {
+                var name = fieldset.getTitle(),
                     value = ADSAFE.get(option, name);
+
                 if (typeof value === 'boolean') {
-                    if (name !== 'adsafe' && name !== 'safe') {
+// TJK: first 2 options ('bro' and 'keyboard') should not be part of the JSLint directive (/*jslint   */)
+                    if (name !== 'adsafe' && name !== 'safe' && name !== 'bro' && name !== 'keyboard') {
                         a.push(name + ': ' + value);
                     }
-                    bunch.style('backgroundColor', value ? 'black' : 'white');
+
+// TJK: tristate via classes true/false/undefined
+
+                    fieldset.klass(value ? 'true' : 'false');
+
+                    if (value) {
+                        fieldset.q('input.true').check(true);
+                    } else {
+                        fieldset.q('input.false').check(true);
+                    }
+
                 } else {
-                    bunch.style('backgroundColor', 'gainsboro');
+                    fieldset.klass('undefined');
+                    fieldset.q('input.undefined').check(true);
                 }
+
             });
             if (typeof option.maxerr === 'number' && option.maxerr >= 0) {
                 a.push('maxerr: ' + String(option.maxerr));
@@ -77,18 +96,19 @@ ADSAFE.lib("init_ui", function (lib) {
             show_jslint_control();
         }
 
-        function update_box(event) {
-
 //  Boxes are tristate, cycling true, false, undefined.
+//  TJK: keeping things in sync from the radio buttons.
 
-            var title = event.target.getTitle();
+        function update_box_from_radio_button(event) {
+
+            var title = event.target.getName();
             if (title) {
                 ADSAFE.set(option, title,
-                    ADSAFE.get(option, title) === true
+                    event.target.getValue() === 'true'
+                        ? true
+                        : event.target.getValue() === 'false'
                         ? false
-                        : ADSAFE.get(option, title) === false
-                        ? undefined
-                        : true);
+                        : undefined);
             }
             show_jslint_control();
         }
@@ -137,7 +157,7 @@ ADSAFE.lib("init_ui", function (lib) {
 
 // Add click event handlers to the [JSLint] and [clear] buttons.
 
-        dom.q('input&jslint').on('click', function () {
+        dom.q('button&jslint').on('click', function () {
             tree.value('');
 
 // Call JSLint and display the report.
@@ -147,7 +167,7 @@ ADSAFE.lib("init_ui", function (lib) {
             return false;
         });
 
-        dom.q('input&tree').on('click', function () {
+        dom.q('button&tree').on('click', function () {
             output.value('Tree:');
             tree.value(JSON.stringify(lib.tree(), [
                 'label', 'id', 'string', 'number', 'arity', 'name', 'first',
@@ -156,22 +176,38 @@ ADSAFE.lib("init_ui", function (lib) {
             input.select();
         });
 
-        dom.q('input&clear').on('click', function () {
+        dom.q('button&clear').on('click', function () {
             output.value('');
             tree.value('');
             input.value('').select();
+            // TJK clean up/hide the file info (the DL) and flag from textarea
+            fileinfo.klass('visibilityHidden');
+            input.klass('');
+            input.blur();
         });
-
 
         dom.q('#JSLINT_CLEARALL').on('click', function () {
             option = {
                 indent: 4,
                 maxerr: 50
             };
+
+// TJK: reset all radiobuttons and fieldsets to 'undefined'
+
+            allradiodefaults.each(function (radio) {
+                radio.check(true);
+            });
+
+            allfieldsets.each(function (fieldset) {
+                fieldset.check();
+            });
+
             show_options();
+
         });
 
-        table.on('click', update_box);
+        allradiobuttons.on('click', update_box_from_radio_button);
+
         indent.on('change', update_number);
         maxerr.on('change', update_number);
         maxlen.on('change', update_number);
@@ -183,3 +219,5 @@ ADSAFE.lib("init_ui", function (lib) {
             .select();
     };
 });
+
+
