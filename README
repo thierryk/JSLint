@@ -5,6 +5,16 @@ Thierry Koblentz
 
 2012-05-31
 
+Features
+--------
+
+Users can:
+   - navigate via keyboard
+   - paste code
+   - paste a URL
+   - drop a file
+   - upload a file
+
 Below is a copy of the README from Douglas Crockford's repo
 See: https://github.com/douglascrockford/JSLint/blob/master/README
 
