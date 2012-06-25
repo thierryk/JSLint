@@ -24,6 +24,7 @@ ADSAFE.lib("init_ui", function (lib) {
             allradiobuttons = table.q('input'),
             allradiodefaults = table.q('input[value=undefined]'),
             indent = dom.q('#JSLINT_INDENT'),
+            inputform = document.getElementById('inputForm'),
             input = dom.q('#JSLINT_INPUT'),
             jslintstring = dom.q('#JSLINT_JSLINTSTRING'),
             maxerr = dom.q('#JSLINT_MAXERR'),
@@ -33,7 +34,17 @@ ADSAFE.lib("init_ui", function (lib) {
             tree = dom.q('#JSLINT_TREE'),
             predefined = dom.q('#JSLINT_PREDEF'),
             // TJK for some weird reason trying to get to this via an ID fails
-            fileinfo = dom.q('dl');
+            fileinfo = dom.q('dl'),
+            lastChars;
+
+// TJK check if an URL is passed and if it is then fetch the content of the file
+// (remove white-space and then check the last characters) and feed the textarea
+        function fetchURL(){
+            lastChars = input.getValue().replace(/\s/g, '').slice(input.getValue().lastIndexOf(".")+1);
+            if(input !== "" && lastChars === "js") {
+                inputform.submit();
+            }
+        }
 
 // Take care of the JSLint directive ('/*jslint ... */') box
         function show_jslint_control() {
@@ -156,8 +167,13 @@ ADSAFE.lib("init_ui", function (lib) {
         dom.q('#JSLINT_EDITION').value('Edition ' + lib.edition());
 
 // Add click event handlers to the [JSLint] and [clear] buttons.
+// TJK if the textarea is empty we quit. If it is not we check if we're dealing with a URL
 
         dom.q('button&jslint').on('click', function () {
+            if(input.getValue() === "") {
+                return;
+            }
+            fetchURL();
             tree.value('');
 
 // Call JSLint and display the report.

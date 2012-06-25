@@ -1,3 +1,20 @@
+<?php
+  function file_get_contents_curl($url) {
+      $ch = curl_init();
+
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt( $ch, CURLOPT_ENCODING, "" );
+      curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+      curl_setopt($ch, CURLOPT_HEADER, 0);
+
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+
+      $data = curl_exec($ch);
+      curl_close($ch);
+
+      return $data;
+  }
+?>
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -39,6 +56,8 @@
 
 <body>
 
+<a href="https://github.com/thierryk/JSLint"><img style="position: absolute; z-index: 10; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+
 <div id="ie">Chances are that you're a web developer, so I expect you to have a better browser than that ;-)</div>
 
 <!-- #header > -->
@@ -60,7 +79,6 @@
 <!-- < #header -->
 
 <!--
-
 <script src="json2.js"></script>
 <script src="jslint.js"></script>
 <script src="adsafe.js"></script>
@@ -92,9 +110,12 @@ web_jslint.js = json2.js + jslint.js + adsafe.js + intercept.js
                 <h2 class="nomouse-alternative"><span class="forBro">Dump your awesome code below</span><span>Enter your code in the box below</span></h2>
 
 <!-- do not add a class on this textarea. A class is already used as a flag for the background image -->
-                <div id="textAreaWrapper" class="jsLint-box">
-                    <textarea id="JSLINT_INPUT" title="Enter your code here"> </textarea>
-                </div>
+                <form action="" method="post" id="inputForm" class="jsLint-box">
+                    <textarea id="JSLINT_INPUT" name="JSLINT_INPUT" title="Enter your code here"
+                        value="<?php
+                         echo file_get_contents_curl($_POST['JSLINT_INPUT']);
+                        ?>"></textarea>
+                </form>
 
             <div id="buttonsForInput">
 
@@ -756,121 +777,128 @@ web_jslint.js = json2.js + jslint.js + adsafe.js + intercept.js
     /**
      * TODO: clean all this stuff
      */
-YUI().use('node', 'selector-css3', 'node-event-simulate', 'event-key', function (Y) {
+YUI().use('node', 'selector-css3', 'node-event-simulate', 'event-key', 'io-xdr', function (Y) {
 
-    var BODY = Y.one('body'),
-        VIEWS = Y.one('#JSLINT_TABLE'),
-        IamBroRadios = Y.all('input[name="bro"]'),
-        IamBroRadio = Y.one('#IamBro'),
-        keyboardRadios = Y.all('input[name="keyboard"]'),
-        keyboardRadio = Y.one('#nomouse-true'),
-        headerLinks = Y.one('#header').all('a');
+        var BODY = Y.one('body'),
+            VIEWS = Y.one('#JSLINT_TABLE'),
+            IamBroRadios = Y.all('input[name="bro"]'),
+            IamBroRadio = Y.one('#IamBro'),
+            keyboardRadios = Y.all('input[name="keyboard"]'),
+            keyboardRadio = Y.one('#nomouse-true'),
+            headerLinks = Y.one('#header').all('a'),
+            textArea = Y.one('#JSLINT_INPUT');
 
-   /**
-    * DOMREADY stuff
-    */
-    // Set Brogrammer and nomouse-true class according to cookie
-    // Also set the checkbox status at the very top (keyboard)
+        // If the page loads with stuff in the textarea it means the page is loading the content of an URL
+        // so we can lint that content
+        Y.on("load", function() {
+            if(textArea.get('value') !== "") {
+                textArea.addClass('fed');
+                Y.one('#lint-btn').simulate("click");
+            }
+        });
 
-    Y.on("domready", function() {
-        if(IamBroRadio.get('checked')) BODY.addClass('brogrammer');
+       /**
+        * DOMREADY stuff
+        */
+        // Set Brogrammer and nomouse-true class according to cookie
+        // Also set the checkbox status at the very top (keyboard)
+        Y.on("domready", function() {
+            if(IamBroRadio.get('checked')) BODY.addClass('brogrammer');
 
-        if(keyboardRadio.get('checked')) {
-            BODY.addClass('nomouse-true');
-            Y.one('#keyboardUserChoice').setAttribute('checked','checked');
-            headerLinks.setAttribute('tabindex','-1');
-        } else {
-            headerLinks.setAttribute('tabindex','');
+            if(keyboardRadio.get('checked')) {
+                BODY.addClass('nomouse-true');
+                Y.one('#keyboardUserChoice').setAttribute('checked','checked');
+                headerLinks.setAttribute('tabindex','-1');
+            } else {
+                headerLinks.setAttribute('tabindex','');
+            }
+         });
+
+        /**
+         * CHANGE stuff
+         *
+         * Keyboard navigation options.
+         * Reload the page to enable keyboard features (via a class on <body>)
+         */
+        keyboardRadios.on('change', function() {
+            document.location.reload();
+        });
+        /**
+         * Brogrammer option. Maintaining state - We tag <body> with '.brogrammer'
+         */
+        IamBroRadios.on('change', IamBro);
+        function IamBro(evt) {
+            if(evt.currentTarget.get('value') === 'true') {
+                BODY.addClass('brogrammer');
+            } else {
+                BODY.removeClass('brogrammer');
+            }
         }
-     });
 
-    /**
-     * CHANGE stuff
-     *
-     * Keyboard navigation options.
-     * Reload the page to enable keyboard features (via a class on <body>)
-     */
-    keyboardRadios.on('change', function() {
-        document.location.reload();
-    });
-    /**
-     * Brogrammer option. Maintaining state - We tag <body> with '.brogrammer'
-     */
-    IamBroRadios.on('change', IamBro);
-    function IamBro(evt) {
-        if(evt.currentTarget.get('value') === 'true') {
-            BODY.addClass('brogrammer');
-        } else {
-            BODY.removeClass('brogrammer');
+        /**
+         * Checkbox for keyboard user at the very top of the page
+         * Its on value is set on 'domready'
+         * If a selection is made, set the radio button (option) to the same value
+         */
+        Y.one('#keyboardUserChoice').on('click', function(evt) {
+            if(Y.Node.getDOMNode(this).checked) {
+                Y.one('#nomouse-true').simulate("click");
+                Y.one('#overlay').setHTML('<p>This will remove all links in the menu out of tabbing navigation (among other things).<br>Turn this option off if you want to access links in the menu.</p>');
+            } else {
+                Y.one('#nomouse-false').simulate("click");
+            }
+        });
+
+        /**
+         * MORE INFO/OVERLAY (in #options)
+         * Clicking on the info icon reveals the information text
+         * Different behavior for keyboard and mouse
+         */
+        Y.all('.info-btn').on('click', function(evt) {
+            if(BODY.hasClass('nomouse-true')) {
+                evt.currentTarget.ancestor('li').one('.info').toggleClass('show');
+            } else {
+                Y.one('#overlay').setHTML('<div id="overlay-wrap" class="info"><b>'+evt.currentTarget.ancestor('li').one('legend').getHTML()+'</b>'+evt.currentTarget.ancestor('li').one('.info').getHTML()+'</div>');
+            }
+        });
+        // CLOSE the overlay (clicking anywhere will close the overlay)
+        Y.one('#overlay').on('click', function(){Y.one('#overlay').setHTML()})
+
+        // CLEAR button will focus on textarea when user clicks on it
+        Y.one('#clear-btn').on('click', function(evt) {
+            Y.one('#JSLINT_INPUT').focus();
+        });
+
+        // SKIP LINKS to focus on specific elements
+        Y.one('#skipToOtherOptions').on('click', function(evt) {
+            Y.one('#JSLINT_INDENT').focus();
+        });
+        Y.one('#skipToTextarea').on('click', function(evt) {
+            Y.one('#JSLINT_INPUT').focus();
+        });
+        Y.one('#lint-btn').on('click', function(evt) {
+            if(BODY.hasClass('nomouse-true')) {
+                Y.one('#errors').focus();
+            }
+        });
+
+        // OPTIONS TABS the active item/view in #optionsWrapper
+        Y.one('#optionsWrapper-pager').on('click', tagIt);
+        function tagIt(evt) {
+            // Get the ID of the selected link
+            currentLink = evt.target;
+            linkID = currentLink.get('id');
+            this.get('children').removeClass('active');
+            evt.target.get('parentNode').addClass('active');
+
+            // Tag the container with the name of the selected view so we can use this hook to toggle the different views
+            VIEWS.setAttribute('class',linkID);
         }
-    }
 
-    /**
-     * Checkbox for keyboard user at the very top of the page
-     * Its on value is set on 'domready'
-     * If a selection is made, set the radio button (option) to the same value
-     */
-    Y.one('#keyboardUserChoice').on('click', function(evt) {
-        if(Y.Node.getDOMNode(this).checked) {
-            Y.one('#nomouse-true').simulate("click");
-            Y.one('#overlay').setHTML('<p>This will remove all links in the menu out of tabbing navigation (among other things).<br>Turn this option off if you want to access links in the menu.</p>');
-        } else {
-            Y.one('#nomouse-false').simulate("click");
-        }
-    });
-
-    /**
-     * MORE INFO/OVERLAY (in #options)
-     * Clicking on the info icon reveals the information text
-     * Different behavior for keyboard and mouse
-     */
-    Y.all('.info-btn').on('click', function(evt) {
-        if(BODY.hasClass('nomouse-true')) {
-            evt.currentTarget.ancestor('li').one('.info').toggleClass('show');
-        } else {
-            Y.one('#overlay').setHTML('<div id="overlay-wrap" class="info"><b>'+evt.currentTarget.ancestor('li').one('legend').getHTML()+'</b>'+evt.currentTarget.ancestor('li').one('.info').getHTML()+'</div>');
-        }
-    });
-    // CLOSE the overlay (clicking anywhere will close the overlay)
-    Y.one('#overlay').on('click', function(){Y.one('#overlay').setHTML()})
-
-    // CLEAR button will focus on textarea when user clicks on it
-    Y.one('#clear-btn').on('click', function(evt) {
-        Y.one('#JSLINT_INPUT').focus();
-    });
-
-    // SKIP LINKS to focus on specific elements
-    Y.one('#skipToOtherOptions').on('click', function(evt) {
-        Y.one('#JSLINT_INDENT').focus();
-    });
-    Y.one('#skipToTextarea').on('click', function(evt) {
-        Y.one('#JSLINT_INPUT').focus();
-    });
-    Y.one('#lint-btn').on('click', function(evt) {
-        if(BODY.hasClass('nomouse-true')) {
-            Y.one('#errors').focus();
-        }
-    });
-
-
-
-    // OPTIONS TABS the active item/view in #optionsWrapper
-    Y.one('#optionsWrapper-pager').on('click', tagIt);
-    function tagIt(evt) {
-        // Get the ID of the selected link
-        currentLink = evt.target;
-        linkID = currentLink.get('id');
-        this.get('children').removeClass('active');
-        evt.target.get('parentNode').addClass('active');
-
-        // Tag the container with the name of the selected view so we can use this hook to toggle the different views
-        VIEWS.setAttribute('class',linkID);
-    }
-
-    // Kill the overlay if the user presses the escape key
-    Y.on("key", function () {
-        Y.one('#overlay').setHTML('');
-    }, 'body' ,"down:27");
+        // Kill the overlay if the user presses the escape key
+        Y.on("key", function () {
+            Y.one('#overlay').setHTML('');
+        }, 'body' ,"down:27");
 
 });
 
